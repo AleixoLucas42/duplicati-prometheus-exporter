@@ -68,8 +68,10 @@ def backup_summary(backup):
 def get_backup():
     if request.is_json:
         data = request.json
-        backup_inc(Duplicati(data))
-        backup_summary(Duplicati(data))
+        backup = Duplicati(data)
+        backup_inc(backup)
+        backup_summary(backup)
+        print(f"[+] {backup.operation_name} for {backup.backup_name} was finished with {backup.result} status")
         response = make_response(jsonify({"message": "Received"}), 204)
     else:
         response = make_response(
