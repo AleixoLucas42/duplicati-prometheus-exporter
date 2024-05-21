@@ -1,5 +1,6 @@
 #!/bin/python3
 
+import os
 from flask import Response, Flask, request, make_response, jsonify
 import prometheus_client
 from prometheus_client.core import CollectorRegistry
@@ -91,4 +92,4 @@ def requests_count():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=os.getenv("DUPLICATI_EXPORTER_PORT", 5000))
