@@ -44,23 +44,24 @@ def backup_inc(backup):
         result=backup.result,
     ).inc()
 
+
 def backup_summary(backup):
     graphs["s"].labels(
-            backup_name=backup.backup_name,
-            result=backup.result,
-            begin_time=backup.begin_time,
-            end_time=backup.end_time,
-            duration=backup.duration,
-            bytes_uploaded=backup.bytes_uploaded,
-            bytes_downloaded=backup.bytes_downloaded,
-            files_uploaded=backup.files_uploaded,
-            files_downloaded=backup.files_downloaded,
-            files_deleted=backup.files_deleted,
-            folders_created=backup.folders_created,
-            total_quota_space=backup.total_quota_space,
-            free_quota_space=backup.free_quota_space,
-            backup_list_count=backup.backup_list_count
-        ).observe(1)
+        backup_name=backup.backup_name,
+        result=backup.result,
+        begin_time=backup.begin_time,
+        end_time=backup.end_time,
+        duration=backup.duration,
+        bytes_uploaded=backup.bytes_uploaded,
+        bytes_downloaded=backup.bytes_downloaded,
+        files_uploaded=backup.files_uploaded,
+        files_downloaded=backup.files_downloaded,
+        files_deleted=backup.files_deleted,
+        folders_created=backup.folders_created,
+        total_quota_space=backup.total_quota_space,
+        free_quota_space=backup.free_quota_space,
+        backup_list_count=backup.backup_list_count,
+    ).observe(1)
 
 
 @app.route("/", methods=["POST"])

@@ -2,6 +2,7 @@
 from datetime import datetime
 import pytz
 
+
 class Duplicati:
     def __init__(self, result):
         self.operation_name = result.get("Extra")["OperationName"]

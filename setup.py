@@ -16,7 +16,12 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
-    install_requires=["Flask==3.0.3", "Flask-Cors==4.0.0", "prometheus_client==0.20.0","pytz==2024.1"],
+    install_requires=[
+        "Flask==3.0.3",
+        "Flask-Cors==4.0.0",
+        "prometheus_client==0.20.0",
+        "pytz==2024.1",
+    ],
     include_package_data=True,
     project_urls={
         "Bug Reports": "https://github.com/AleixoLucas42/duplicati-promethes-exporter/issues",
