@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 60s
+  evaluation_interval: 30s
+scrape_configs:
+- job_name: duplicati_backup
+  honor_labels: true
+  static_configs:
+  - targets: ['duplicati-prometheus-exporter:5000']

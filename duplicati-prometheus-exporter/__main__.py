@@ -1,7 +1,7 @@
 #!/bin/python3
 
 import os
-from flask import Response, Flask, request, make_response, jsonify
+from flask import Response, Flask, request, make_response, jsonify, abort
 import prometheus_client
 from prometheus_client.core import CollectorRegistry
 from prometheus_client import Summary, Counter
@@ -63,9 +63,12 @@ def backup_summary(backup):
         backup_list_count=backup.backup_list_count,
     ).observe(1)
 
+@app.route("/", methods=["GET"])
+def get_backup():
+    abort(403)
 
 @app.route("/", methods=["POST"])
-def get_backup():
+def post_backup():
     if request.is_json:
         data = request.json
         backup = Duplicati(data)
