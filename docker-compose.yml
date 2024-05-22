@@ -34,7 +34,7 @@ services:
       /bin/sh -c "
         apk add --no-cache curl
         echo 'waiting for grafana'
-        sleep 5s
-        curl --request POST http://grafana:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasources.json
+        sleep 20s
+        curl --request POST http://grafana:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasource.json
+        curl --request POST http://grafana:3000/api/dashboards/db --header 'Content-Type: application/json' -d @/config/monitoring/dashboard.json
         curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json"
-#curl --request POST http://grafana:3000/api/dashboards/db --header 'Content-Type: application/json' -d @/grafana/dashboard.json

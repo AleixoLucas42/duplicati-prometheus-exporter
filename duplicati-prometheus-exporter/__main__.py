@@ -4,18 +4,43 @@ import os
 from flask import Response, Flask, request, make_response, jsonify, abort
 import prometheus_client
 from prometheus_client.core import CollectorRegistry
-from prometheus_client import Summary, Counter
+from prometheus_client import Summary, Counter, Gauge
 from classes.duplicati import Duplicati
 
 app = Flask(__name__)
 
 graphs = {}
-graphs["c"] = Counter(
+graphs["duplicati_backup_ops"] = Counter(
     "duplicati_backup_ops",
     "The total number of backups done",
     ["operation_name", "backup_name", "result"],
 )
-graphs["s"] = Summary(
+
+graphs["begin_time"] = Gauge("begin_time", "Begin Time", ["backup_name"])
+graphs["end_time"] = Gauge("end_time", "End Time", ["backup_name"])
+graphs["duration"] = Gauge("duration", "Duration", ["backup_name"])
+graphs["backup_list_count"] = Gauge(
+    "backup_list_count", "Backup List Count", ["backup_name"]
+)
+graphs["bytes_uploaded"] = Gauge("bytes_uploaded", "Bytes Uploaded", ["backup_name"])
+graphs["bytes_downloaded"] = Gauge(
+    "bytes_downloaded", "Bytes Downloaded", ["backup_name"]
+)
+graphs["files_uploaded"] = Gauge("files_uploaded", "Files Uploaded", ["backup_name"])
+graphs["files_downloaded"] = Gauge(
+    "files_downloaded", "Files Downloaded", ["backup_name"]
+)
+graphs["files_deleted"] = Gauge("files_deleted", "Files Deleted", ["backup_name"])
+graphs["folders_created"] = Gauge("folders_created", "Folders Created", ["backup_name"])
+graphs["free_quota_space"] = Gauge(
+    "free_quota_space", "Free Quota Space", ["backup_name"]
+)
+graphs["total_quota_space"] = Gauge(
+    "total_quota_space", "Total Quota Space", ["backup_name"]
+)
+
+
+graphs["duplicati_backup_summary"] = Summary(
     "duplicati_backup_summary",
     "Summary of duplicati backup jobs",
     [
@@ -38,7 +63,7 @@ graphs["s"] = Summary(
 
 
 def backup_inc(backup):
-    graphs["c"].labels(
+    graphs["duplicati_backup_ops"].labels(
         operation_name=backup.operation_name,
         backup_name=backup.backup_name,
         result=backup.result,
@@ -46,7 +71,7 @@ def backup_inc(backup):
 
 
 def backup_summary(backup):
-    graphs["s"].labels(
+    graphs["duplicati_backup_summary"].labels(
         backup_name=backup.backup_name,
         result=backup.result,
         begin_time=backup.begin_time,
@@ -63,9 +88,21 @@ def backup_summary(backup):
         backup_list_count=backup.backup_list_count,
     ).observe(1)
 
-@app.route("/", methods=["GET"])
-def get_backup():
-    abort(403)
+
+def backup_gauge(backup):
+    graphs["begin_time"].labels(backup_name=backup.backup_name).set(backup.begin_time)
+    graphs["end_time"].labels(backup_name=backup.backup_name).set(backup.end_time)
+    graphs["duration"].labels(backup_name=backup.backup_name).set(backup.duration)
+    graphs["backup_list_count"].labels(backup_name=backup.backup_name).set(backup.backup_list_count)
+    graphs["bytes_uploaded"].labels(backup_name=backup.backup_name).set(backup.bytes_uploaded)
+    graphs["bytes_downloaded"].labels(backup_name=backup.backup_name).set(backup.bytes_downloaded)
+    graphs["files_uploaded"].labels(backup_name=backup.backup_name).set(backup.files_uploaded)
+    graphs["files_downloaded"].labels(backup_name=backup.backup_name).set(backup.files_downloaded)
+    graphs["files_deleted"].labels(backup_name=backup.backup_name).set(backup.files_deleted)
+    graphs["folders_created"].labels(backup_name=backup.backup_name).set(backup.folders_created)
+    graphs["free_quota_space"].labels(backup_name=backup.backup_name).set(backup.free_quota_space)
+    graphs["total_quota_space"].labels(backup_name=backup.backup_name).set(backup.total_quota_space)
+
 
 @app.route("/", methods=["POST"])
 def post_backup():
@@ -74,7 +111,10 @@ def post_backup():
         backup = Duplicati(data)
         backup_inc(backup)
         backup_summary(backup)
-        print(f"[+] {backup.operation_name} for {backup.backup_name} was finished with {backup.result} status")
+        backup_gauge(backup)
+        print(
+            f"[+] {backup.operation_name} for {backup.backup_name} was finished with {backup.result} status"
+        )
         response = make_response(jsonify({"message": "Received"}), 204)
     else:
         response = make_response(
@@ -95,6 +135,11 @@ def requests_count():
     for k, v in graphs.items():
         res.append(prometheus_client.generate_latest(v))
     return Response(res, mimetype="text/plain")
+
+
+@app.route("/", methods=["GET"])
+def get_backup():
+    abort(403)
 
 
 if __name__ == "__main__":
