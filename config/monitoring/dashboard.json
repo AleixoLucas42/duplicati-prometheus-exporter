@@ -858,7 +858,7 @@
 						"type": "prometheus",
 						"uid": "${datasource}"
 					},
-					"definition": "label_values(backup_name)",
+					"definition": "label_values(duplicati_backup_ops_total,backup_name)",
 					"hide": 0,
 					"includeAll": false,
 					"multi": false,
@@ -866,7 +866,7 @@
 					"options": [],
 					"query": {
 						"qryType": 1,
-						"query": "label_values(backup_name)",
+						"query": "label_values(duplicati_backup_ops_total,backup_name)",
 						"refId": "PrometheusVariableQueryEditor-VariableQuery"
 					},
 					"refresh": 1,
@@ -885,15 +885,15 @@
 						"type": "prometheus",
 						"uid": "${datasource}"
 					},
-					"definition": "label_values(operation_name)",
-					"hide": 1,
+					"definition": "label_values(duplicati_backup_ops_total,operation_name)",
+					"hide": 0,
 					"includeAll": false,
 					"multi": false,
 					"name": "operation",
 					"options": [],
 					"query": {
 						"qryType": 1,
-						"query": "label_values(operation_name)",
+						"query": "label_values(duplicati_backup_ops_total,operation_name)",
 						"refId": "PrometheusVariableQueryEditor-VariableQuery"
 					},
 					"refresh": 1,
@@ -906,10 +906,11 @@
 					"current": {
 						"selected": false,
 						"text": "prometheus",
-						"value": "bdmithcacewhsf"
+						"value": "ddmlo2fn7vocgd"
 					},
 					"hide": 0,
 					"includeAll": false,
+					"label": "datasource",
 					"multi": false,
 					"name": "datasource",
 					"options": [],
@@ -929,7 +930,7 @@
 		"timezone": "browser",
 		"title": "Duplicati Backup Dashboard",
 		"uid": "ddmio2e27ctmod",
-		"version": 5,
+		"version": 2,
 		"weekStart": ""
 	},
 	"folderUid": "",

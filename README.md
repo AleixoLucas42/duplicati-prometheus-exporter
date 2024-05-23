@@ -20,6 +20,18 @@ For this demo is needed to be installed docker in your machine. How demo is sett
 ![Grafana dashboard example](docs/static/grafan-dash.png)
 ~This dashboard can change while i'm developing and improving.
 
+## Prometheus scram config example
+```yaml
+global:
+  scrape_interval: 60s
+  evaluation_interval: 30s
+scrape_configs:
+- job_name: duplicati_backup
+  honor_labels: true
+  static_configs:
+  - targets: ['duplicati-prometheus-exporter:5000'] # you can change to set your exporter instance
+```
+
 ## Run duplicati prometheus exporter using docker
 Docker is the better way to execute this application. If you prefer, you can build your own
 container image based on my [Dockerfile](Dockerfile) to change anythong you want and store your

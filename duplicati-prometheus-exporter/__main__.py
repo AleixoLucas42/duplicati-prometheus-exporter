@@ -16,27 +16,45 @@ graphs["duplicati_backup_ops"] = Counter(
     ["operation_name", "backup_name", "result"],
 )
 
-graphs["begin_time"] = Gauge("begin_time", "Begin Time", ["backup_name"])
-graphs["end_time"] = Gauge("end_time", "End Time", ["backup_name"])
-graphs["duration"] = Gauge("duration", "Duration", ["backup_name"])
+graphs["begin_time"] = Gauge(
+    "begin_time", "Begin Time", ["backup_name", "operation_name", "result"]
+)
+graphs["end_time"] = Gauge(
+    "end_time", "End Time", ["backup_name", "operation_name", "result"]
+)
+graphs["duration"] = Gauge(
+    "duration", "Duration", ["backup_name", "operation_name", "result"]
+)
 graphs["backup_list_count"] = Gauge(
-    "backup_list_count", "Backup List Count", ["backup_name"]
+    "backup_list_count",
+    "Backup List Count",
+    ["backup_name", "operation_name", "result"],
 )
-graphs["bytes_uploaded"] = Gauge("bytes_uploaded", "Bytes Uploaded", ["backup_name"])
+graphs["bytes_uploaded"] = Gauge(
+    "bytes_uploaded", "Bytes Uploaded", ["backup_name", "operation_name", "result"]
+)
 graphs["bytes_downloaded"] = Gauge(
-    "bytes_downloaded", "Bytes Downloaded", ["backup_name"]
+    "bytes_downloaded", "Bytes Downloaded", ["backup_name", "operation_name", "result"]
 )
-graphs["files_uploaded"] = Gauge("files_uploaded", "Files Uploaded", ["backup_name"])
+graphs["files_uploaded"] = Gauge(
+    "files_uploaded", "Files Uploaded", ["backup_name", "operation_name", "result"]
+)
 graphs["files_downloaded"] = Gauge(
-    "files_downloaded", "Files Downloaded", ["backup_name"]
+    "files_downloaded", "Files Downloaded", ["backup_name", "operation_name", "result"]
 )
-graphs["files_deleted"] = Gauge("files_deleted", "Files Deleted", ["backup_name"])
-graphs["folders_created"] = Gauge("folders_created", "Folders Created", ["backup_name"])
+graphs["files_deleted"] = Gauge(
+    "files_deleted", "Files Deleted", ["backup_name", "operation_name", "result"]
+)
+graphs["folders_created"] = Gauge(
+    "folders_created", "Folders Created", ["backup_name", "operation_name", "result"]
+)
 graphs["free_quota_space"] = Gauge(
-    "free_quota_space", "Free Quota Space", ["backup_name"]
+    "free_quota_space", "Free Quota Space", ["backup_name", "operation_name", "result"]
 )
 graphs["total_quota_space"] = Gauge(
-    "total_quota_space", "Total Quota Space", ["backup_name"]
+    "total_quota_space",
+    "Total Quota Space",
+    ["backup_name", "operation_name", "result"],
 )
 
 
@@ -90,18 +108,66 @@ def backup_summary(backup):
 
 
 def backup_gauge(backup):
-    graphs["begin_time"].labels(backup_name=backup.backup_name).set(backup.begin_time)
-    graphs["end_time"].labels(backup_name=backup.backup_name).set(backup.end_time)
-    graphs["duration"].labels(backup_name=backup.backup_name).set(backup.duration)
-    graphs["backup_list_count"].labels(backup_name=backup.backup_name).set(backup.backup_list_count)
-    graphs["bytes_uploaded"].labels(backup_name=backup.backup_name).set(backup.bytes_uploaded)
-    graphs["bytes_downloaded"].labels(backup_name=backup.backup_name).set(backup.bytes_downloaded)
-    graphs["files_uploaded"].labels(backup_name=backup.backup_name).set(backup.files_uploaded)
-    graphs["files_downloaded"].labels(backup_name=backup.backup_name).set(backup.files_downloaded)
-    graphs["files_deleted"].labels(backup_name=backup.backup_name).set(backup.files_deleted)
-    graphs["folders_created"].labels(backup_name=backup.backup_name).set(backup.folders_created)
-    graphs["free_quota_space"].labels(backup_name=backup.backup_name).set(backup.free_quota_space)
-    graphs["total_quota_space"].labels(backup_name=backup.backup_name).set(backup.total_quota_space)
+    graphs["begin_time"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.begin_time)
+    graphs["end_time"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.end_time)
+    graphs["duration"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.duration)
+    graphs["backup_list_count"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.backup_list_count)
+    graphs["bytes_uploaded"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.bytes_uploaded)
+    graphs["bytes_downloaded"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.bytes_downloaded)
+    graphs["files_uploaded"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.files_uploaded)
+    graphs["files_downloaded"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.files_downloaded)
+    graphs["files_deleted"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.files_deleted)
+    graphs["folders_created"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.folders_created)
+    graphs["free_quota_space"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.free_quota_space)
+    graphs["total_quota_space"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.total_quota_space)
 
 
 @app.route("/", methods=["POST"])

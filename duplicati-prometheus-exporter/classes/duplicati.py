@@ -10,7 +10,9 @@ class Duplicati:
         self.result = result.get("Data")["ParsedResult"]
         self.begin_time = self.convert_epoch(result.get("Data")["BeginTime"])
         self.end_time = self.convert_epoch(result.get("Data")["EndTime"])
-        self.duration = self.convert_duration(self.rm_spaces(result.get("Data")["Duration"]))
+        self.duration = self.convert_duration(
+            self.rm_spaces(result.get("Data")["Duration"])
+        )
         self.backup_list_count = result.get("Data")["BackendStatistics"][
             "BackupListCount"
         ]
@@ -39,10 +41,10 @@ class Duplicati:
 
     def rm_spaces(self, string):
         return string.replace(" ", "")
-    
+
     def convert_duration(self, duration_str):
-        h, m, s = duration_str.split(':')
-        s, ms = s.split('.')
-        
+        h, m, s = duration_str.split(":")
+        s, ms = s.split(".")
+
         total_seconds = int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1_000_000
         return total_seconds
