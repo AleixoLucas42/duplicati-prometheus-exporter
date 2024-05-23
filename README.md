@@ -20,7 +20,7 @@ For this demo is needed to be installed docker in your machine. How demo is sett
 ![Grafana dashboard example](docs/static/grafan-dash.png)
 ~This dashboard can change while i'm developing and improving.
 
-## Prometheus scram config example
+## Prometheus scrap config example
 ```yaml
 global:
   scrape_interval: 60s
