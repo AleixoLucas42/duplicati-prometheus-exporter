@@ -15,7 +15,7 @@ services:
     command: --config.file=/etc/prometheus/prometheus.yaml
     volumes:
       - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
-  grafana:
+  grafana_monitoring:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
@@ -26,7 +26,7 @@ services:
   grafana-config:
     image: alpine
     depends_on:
-      - grafana
+      - grafana_monitoring
       - duplicati-prometheus-exporter
     volumes:
       - ./config:/config
@@ -34,7 +34,10 @@ services:
       /bin/sh -c "
         apk add --no-cache curl
         echo 'waiting for grafana'
-        sleep 20s
-        curl --request POST http://grafana:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasource.json
-        curl --request POST http://grafana:3000/api/dashboards/db --header 'Content-Type: application/json' -d @/config/monitoring/dashboard.json
+        sleep 10s
+        echo 'ADD DATASOURCE'
+        curl --request POST http://grafana_monitoring:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasource.json
+        echo 'ADD DASHBOARD'
+        curl --request POST http://grafana_monitoring:3000/api/dashboards/import --header 'Content-Type: application/json' -d @/config/monitoring/dashboard.json
+        echo 'SEND BACKUP DEMO'
         curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json"
