@@ -34,10 +34,11 @@ services:
       /bin/sh -c "
         apk add --no-cache curl
         echo 'waiting for grafana'
-        sleep 10s
+        sleep 15s
         echo 'ADD DATASOURCE'
         curl --request POST http://grafana_monitoring:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasource.json
         echo 'ADD DASHBOARD'
         curl --request POST http://grafana_monitoring:3000/api/dashboards/import --header 'Content-Type: application/json' -d @/config/monitoring/dashboard.json
         echo 'SEND BACKUP DEMO'
-        curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json"
+        curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json
+        "
