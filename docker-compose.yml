@@ -14,7 +14,7 @@ services:
       - "9090:9090"
     command: --config.file=/etc/prometheus/prometheus.yaml
     volumes:
-      - ./prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - ./config/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
   grafana_monitoring:
     image: grafana/grafana:latest
     ports:
@@ -36,9 +36,9 @@ services:
         echo 'waiting for grafana'
         sleep 15s
         echo 'ADD DATASOURCE'
-        curl --request POST http://grafana_monitoring:3000/api/datasources --header 'Content-Type: application/json' -d @/config/monitoring/datasource.json
+        curl --request POST http://grafana_monitoring:3000/api/datasources --header 'Content-Type: application/json' -d @/config/grafana/datasource.json
         echo 'ADD DASHBOARD'
-        curl --request POST http://grafana_monitoring:3000/api/dashboards/import --header 'Content-Type: application/json' -d @/config/monitoring/dashboard.json
+        curl --request POST http://grafana_monitoring:3000/api/dashboards/import --header 'Content-Type: application/json' -d @/config/grafana/dashboard.json
         echo 'SEND BACKUP DEMO'
         curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json
         "
