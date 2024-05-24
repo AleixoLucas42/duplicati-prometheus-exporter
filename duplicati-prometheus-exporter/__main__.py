@@ -15,7 +15,6 @@ graphs["duplicati_backup_ops"] = Counter(
     "The total number of backups done",
     ["operation_name", "backup_name", "result"],
 )
-
 graphs["begin_time"] = Gauge(
     "begin_time", "Begin Time", ["backup_name", "operation_name", "result"]
 )

@@ -8,12 +8,13 @@ On your Duplicati backup interface or cli, you can configure in advanced options
 # Cli configuration example
 --send-http-url=http://<duplicati-exporter-instance>:5000/
 --send-http-result-output-format=Json
+--send-http-any-operation=true
 ```
 
 ## Setup demo
 For this demo is needed to be installed docker in your machine. How demo is setting up duplicati prometheus exporter app, prometheus and grafana, besides that, there is a configuration container that configure grafana datasource and dashboard, after that, this container send an example post to duplicati example exporter, you can see the configuration on [docker compose file](docker-compose.yml).
 - In repository root, run:
-> docker compose up --force-recreate
+> docker compose up --force-recreate --build --always-recreate-deps
 - After ~15 seconds the address `http://localhost:3000` should be ready. Go to [Grafana in your localhost](http://localhost:3000/d/ddmio2e27ctmod/duplicati-backup-dashboard)
 > http://localhost:3000/d/ddmio2e27ctmod/duplicati-backup-dashboard
 

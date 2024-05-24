@@ -84,7 +84,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "topk(1, free_quota_space{backup_name=\"$backup_name\"}) / topk(1, total_quota_space{backup_name=\"$backup_name\"})  * 100",
+						"expr": "topk(1, free_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"}) / topk(1, total_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"})  * 100",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
@@ -152,7 +152,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "backup_list_count{backup_name=\"$backup_name\"}",
+						"expr": "backup_list_count{backup_name=\"$backup_name\", operation_name=\"Backup\"}",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
@@ -220,14 +220,14 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "duplicati_backup_ops_total{backup_name=\"$backup_name\", result=\"Success\"}",
+						"expr": "duplicati_backup_ops_total{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
 						"refId": "A"
 					}
 				],
-				"title": "Total backup Success [$backup_name]",
+				"title": "Total $operation Success [$backup_name]",
 				"type": "stat"
 			},
 			{
@@ -285,14 +285,14 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "duplicati_backup_ops_total{backup_name=\"$backup_name\", result=\"Fail\"}",
+						"expr": "duplicati_backup_ops_total{backup_name=\"$backup_name\", result=\"Fail\", operation_name=\"$operation\"}",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
 						"refId": "A"
 					}
 				],
-				"title": "Total Backup Failed [$backup_name]",
+				"title": "Total $operation Failed [$backup_name]",
 				"type": "stat"
 			},
 			{
@@ -354,7 +354,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "duplicati_backup_ops_total{backup_name=\"$backup_name\", operation_name=\"$operation\"}",
+						"expr": "sum(duplicati_backup_ops_total{backup_name=\"$backup_name\", operation_name=\"Backup\"}) + sum(duplicati_backup_ops_total{backup_name=\"$backup_name\", operation_name=\"Restore\"})\n",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
@@ -387,7 +387,8 @@
 									"value": 80
 								}
 							]
-						}
+						},
+						"unit": "s"
 					},
 					"overrides": []
 				},
@@ -422,14 +423,14 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "duration{backup_name=\"$backup_name\"}",
+						"expr": "topk(1, duration{backup_name=\"$backup_name\", operation_name=\"$operation\"})",
 						"instant": false,
 						"legendFormat": "Duration",
 						"range": true,
 						"refId": "A"
 					}
 				],
-				"title": "$backup_name duration",
+				"title": "$operation duration [$backup_name]",
 				"type": "stat"
 			},
 			{
@@ -518,7 +519,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "folders_created{backup_name=\"$backup_name\"}",
+						"expr": "folders_created{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Folders Created",
 						"range": true,
@@ -614,7 +615,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "bytes_uploaded{backup_name=\"$backup_name\"}",
+						"expr": "bytes_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Bytes upload",
 						"range": true,
@@ -626,7 +627,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "bytes_downloaded{backup_name=\"$backup_name\"}",
+						"expr": "bytes_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"hide": false,
 						"instant": false,
 						"legendFormat": "Bytes download",
@@ -723,7 +724,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_deleted{backup_name=\"$backup_name\"}",
+						"expr": "files_deleted{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Files deleted",
 						"range": true,
@@ -819,7 +820,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_uploaded{backup_name=\"$backup_name\"}",
+						"expr": "files_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Files upload",
 						"range": true,
@@ -831,7 +832,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_downloaded{backup_name=\"$backup_name\"}",
+						"expr": "files_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"hide": false,
 						"instant": false,
 						"legendFormat": "Files download",
@@ -850,9 +851,9 @@
 			"list": [
 				{
 					"current": {
-						"selected": false,
-						"text": "hashicorp vault",
-						"value": "hashicorp vault"
+						"selected": true,
+						"text": "test-duplicati",
+						"value": "test-duplicati"
 					},
 					"datasource": {
 						"type": "prometheus",
@@ -877,9 +878,9 @@
 				},
 				{
 					"current": {
-						"selected": false,
-						"text": "Backup",
-						"value": "Backup"
+						"selected": true,
+						"text": "Restore",
+						"value": "Restore"
 					},
 					"datasource": {
 						"type": "prometheus",
@@ -906,7 +907,7 @@
 					"current": {
 						"selected": false,
 						"text": "prometheus",
-						"value": "ddmlo2fn7vocgd"
+						"value": "bdmmrr5mruj9ca"
 					},
 					"hide": 0,
 					"includeAll": false,

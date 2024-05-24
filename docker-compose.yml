@@ -40,5 +40,7 @@ services:
         echo 'ADD DASHBOARD'
         curl --request POST http://grafana_monitoring:3000/api/dashboards/import --header 'Content-Type: application/json' -d @/config/grafana/dashboard.json
         echo 'SEND BACKUP DEMO'
-        curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-example.json
+        curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-backup-example.json
+        echo 'SEND RESTORE DEMO'
+        curl --request POST http://duplicati-prometheus-exporter:5000 --header 'Content-Type: application/json' -d @/config/duplicati/duplicati-post-restore-example.json
         "

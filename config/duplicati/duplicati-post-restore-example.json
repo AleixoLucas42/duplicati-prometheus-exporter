@@ -1,0 +1,59 @@
+{
+    "Data": {
+        "RestoredFiles": 0,
+        "SizeOfRestoredFiles": 0,
+        "RestoredFolders": 0,
+        "RestoredSymlinks": 0,
+        "PatchedFiles": 0,
+        "DeletedFiles": 0,
+        "DeletedFolders": 0,
+        "DeletedSymlinks": 0,
+        "MainOperation": "Restore",
+        "RecreateDatabaseResults": "None",
+        "ParsedResult": "Success",
+        "Version": "2.0.7.1 (2.0.7.1_beta_2023-05-25)",
+        "EndTime": "2024-05-24T01: 59: 19.57191Z",
+        "BeginTime": "2024-05-24T01: 59: 18.55766Z",
+        "Duration": "00: 00: 01.0142500",
+        "MessagesActualLength": 7,
+        "WarningsActualLength": 1,
+        "ErrorsActualLength": 0,
+        "BackendStatistics": {
+            "RemoteCalls": 2,
+            "BytesUploaded": 0,
+            "BytesDownloaded": 1145,
+            "FilesUploaded": 0,
+            "FilesDownloaded": 1,
+            "FilesDeleted": 0,
+            "FoldersCreated": 0,
+            "RetryAttempts": 0,
+            "UnknownFileSize": 0,
+            "UnknownFileCount": 0,
+            "KnownFileCount": 3,
+            "KnownFileSize": 2514,
+            "LastBackupDate": "2024-05-23T22: 45: 58-03: 00",
+            "BackupListCount": 1,
+            "TotalQuotaSpace": 52542046208,
+            "FreeQuotaSpace": 25023004672,
+            "AssignedQuotaSpace": -1,
+            "ReportedQuotaError": "False",
+            "ReportedQuotaWarning": "False",
+            "MainOperation": "Restore",
+            "ParsedResult": "Success",
+            "Version": "2.0.7.1 (2.0.7.1_beta_2023-05-25)",
+            "EndTime": "0001-01-01T00: 00: 00",
+            "BeginTime": "2024-05-24T01: 59: 18.557662Z",
+            "Duration": "00: 00: 00",
+            "MessagesActualLength": 0,
+            "WarningsActualLength": 0,
+            "ErrorsActualLength": 0
+        }
+    },
+    "Extra": {
+        "OperationName": "Restore",
+        "backup-name": "test-duplicati"
+    },
+    "LogLines": [
+        "2024-05-23 22: 59: 19 -03 - [Warning-Duplicati.Library.Main.Operation.RestoreHandler-NoFilesRestored]: Restore completed without errors but no files were restored"
+    ]
+}
