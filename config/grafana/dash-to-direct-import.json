@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 13,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -79,7 +79,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -148,7 +148,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -216,7 +216,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -281,7 +281,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -350,7 +350,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -385,10 +385,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -419,7 +415,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -448,6 +444,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -461,6 +458,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -542,6 +540,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -555,6 +554,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -585,7 +585,7 @@
               }
             ]
           },
-          "unit": "decmbytes"
+          "unit": "bytes"
         },
         "overrides": []
       },
@@ -649,6 +649,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -662,6 +663,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -743,6 +745,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -756,6 +759,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -841,16 +845,15 @@
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "hashicorp vault",
-          "value": "hashicorp vault"
+          "selected": true,
+          "text": "test-duplicati",
+          "value": "test-duplicati"
         },
         "datasource": {
           "type": "prometheus",
@@ -904,8 +907,8 @@
       {
         "current": {
           "selected": false,
-          "text": "prometheus_aleixohome",
-          "value": "prometheus_aleixohome"
+          "text": "prometheus",
+          "value": "adn2mwiziat4wd"
         },
         "hide": 0,
         "includeAll": false,
@@ -930,6 +933,6 @@
   "timezone": "browser",
   "title": "Duplicati Backup Dashboard",
   "uid": "ddmio2e27ctmod",
-  "version": 6,
+  "version": 1,
   "weekStart": ""
 }
