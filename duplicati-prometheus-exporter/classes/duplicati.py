@@ -5,33 +5,48 @@ import pytz
 
 class Duplicati:
     def __init__(self, result):
-        self.operation_name = result.get("Extra")["OperationName"]
-        self.backup_name = result.get("Extra")["backup-name"]
-        self.result = result.get("Data")["ParsedResult"]
-        self.begin_time = self.convert_epoch(result.get("Data")["BeginTime"])
-        self.end_time = self.convert_epoch(result.get("Data")["EndTime"])
-        self.duration = self.convert_duration(
-            self.rm_spaces(result.get("Data")["Duration"])
-        )
-        self.backup_list_count = result.get("Data")["BackendStatistics"][
-            "BackupListCount"
-        ]
-        self.bytes_uploaded = result.get("Data")["BackendStatistics"]["BytesUploaded"]
-        self.bytes_downloaded = result.get("Data")["BackendStatistics"][
-            "BytesDownloaded"
-        ]
-        self.files_uploaded = result.get("Data")["BackendStatistics"]["FilesUploaded"]
-        self.files_downloaded = result.get("Data")["BackendStatistics"][
-            "FilesDownloaded"
-        ]
-        self.files_deleted = result.get("Data")["BackendStatistics"]["FilesDeleted"]
-        self.folders_created = result.get("Data")["BackendStatistics"]["FoldersCreated"]
-        self.total_quota_space = result.get("Data")["BackendStatistics"][
-            "TotalQuotaSpace"
-        ]
-        self.free_quota_space = result.get("Data")["BackendStatistics"][
-            "FreeQuotaSpace"
-        ]
+        has_stack_trace = "StackTraceString" in result.get("Data")
+        has_class_name = "ClassName" in result.get("Data")
+
+        if has_stack_trace or has_class_name:
+            self.result = "Fail"
+            self.message = result.get("Data")["Message"]
+            self.backup_name = result.get("Extra")["backup-name"]
+            self.operation_name = result.get("Extra")["OperationName"]
+        else:
+            self.operation_name = result.get("Extra")["OperationName"]
+            self.backup_name = result.get("Extra")["backup-name"]
+            self.result = result.get("Data")["ParsedResult"]
+            self.begin_time = self.convert_epoch(result.get("Data")["BeginTime"])
+            self.end_time = self.convert_epoch(result.get("Data")["EndTime"])
+            self.duration = self.convert_duration(
+                self.rm_spaces(result.get("Data")["Duration"])
+            )
+            self.backup_list_count = result.get("Data")["BackendStatistics"][
+                "BackupListCount"
+            ]
+            self.bytes_uploaded = result.get("Data")["BackendStatistics"][
+                "BytesUploaded"
+            ]
+            self.bytes_downloaded = result.get("Data")["BackendStatistics"][
+                "BytesDownloaded"
+            ]
+            self.files_uploaded = result.get("Data")["BackendStatistics"][
+                "FilesUploaded"
+            ]
+            self.files_downloaded = result.get("Data")["BackendStatistics"][
+                "FilesDownloaded"
+            ]
+            self.files_deleted = result.get("Data")["BackendStatistics"]["FilesDeleted"]
+            self.folders_created = result.get("Data")["BackendStatistics"][
+                "FoldersCreated"
+            ]
+            self.total_quota_space = result.get("Data")["BackendStatistics"][
+                "TotalQuotaSpace"
+            ]
+            self.free_quota_space = result.get("Data")["BackendStatistics"][
+                "FreeQuotaSpace"
+            ]
 
     def convert_epoch(self, date):
         new_date = self.rm_spaces(date)

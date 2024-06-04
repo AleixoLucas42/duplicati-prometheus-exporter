@@ -174,12 +174,15 @@ def post_backup():
     if request.is_json:
         data = request.json
         backup = Duplicati(data)
-        backup_inc(backup)
-        backup_summary(backup)
-        backup_gauge(backup)
         print(
             f"[+] {backup.operation_name} for {backup.backup_name} was finished with {backup.result} status"
         )
+        if backup.result is "Fail":
+            backup_inc(backup)
+            print(f"[!] {backup.message}")
+        else:
+            backup_summary(backup)
+            backup_gauge(backup)
         response = make_response(jsonify({"message": "Received"}), 204)
     else:
         response = make_response(
