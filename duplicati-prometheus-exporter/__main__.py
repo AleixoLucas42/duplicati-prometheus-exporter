@@ -58,7 +58,7 @@ graphs["total_quota_space"] = Gauge(
 graphs["is_last_backup_failed"] = Gauge(
     "is_last_backup_failed",
     "1 means last backup failed",
-    ["backup_name", "operation_name"],
+    ["backup_name"],
 )
 
 
@@ -176,7 +176,6 @@ def backup_gauge(backup):
 def is_last_backup_failed(backup):
     graphs["is_last_backup_failed"].labels(
         backup_name=backup.backup_name,
-        operation_name=backup.operation_name,
     ).set(backup.is_last_backup_failed)
 
 @app.route("/", methods=["POST"])
