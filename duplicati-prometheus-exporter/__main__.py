@@ -55,6 +55,11 @@ graphs["total_quota_space"] = Gauge(
     "Total Quota Space",
     ["backup_name", "operation_name", "result"],
 )
+graphs["is_last_backup_failed"] = Gauge(
+    "is_last_backup_failed",
+    "1 means last backup failed",
+    ["backup_name", "operation_name"],
+)
 
 
 graphs["duplicati_backup_summary"] = Summary(
@@ -168,6 +173,11 @@ def backup_gauge(backup):
         result=backup.result,
     ).set(backup.total_quota_space)
 
+def is_last_backup_failed(backup):
+    graphs["is_last_backup_failed"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+    ).set(backup.is_last_backup_failed)
 
 @app.route("/", methods=["POST"])
 def post_backup():
@@ -179,9 +189,11 @@ def post_backup():
         )
         if backup.result is "Fail":
             print(f"[!] {backup.message}")
+            is_last_backup_failed(backup)
         else:
             backup_summary(backup)
             backup_gauge(backup)
+            is_last_backup_failed(backup)
         backup_inc(backup)
         response = make_response(jsonify({"message": "Received"}), 204)
     else:

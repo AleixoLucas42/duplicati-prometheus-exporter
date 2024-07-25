@@ -7,13 +7,19 @@ class Duplicati:
     def __init__(self, result):
         has_stack_trace = "StackTraceString" in result.get("Data")
         has_class_name = "ClassName" in result.get("Data")
+        has_exception = result.get("Exception") != "None"
 
-        if has_stack_trace or has_class_name:
+        if has_stack_trace or has_class_name or has_exception:
             self.result = "Fail"
-            self.message = result.get("Data")["Message"]
+            if has_exception:
+                self.message = result.get("Exception")
+            else:
+                self.message = result.get("Data")["Message"]
             self.backup_name = result.get("Extra")["backup-name"]
             self.operation_name = result.get("Extra")["OperationName"]
+            self.is_last_backup_failed = 1
         else:
+            self.is_last_backup_failed = 0
             self.operation_name = result.get("Extra")["OperationName"]
             self.backup_name = result.get("Extra")["backup-name"]
             self.result = result.get("Data")["ParsedResult"]
