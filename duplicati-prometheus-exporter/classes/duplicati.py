@@ -7,7 +7,7 @@ class Duplicati:
     def __init__(self, result):
         has_stack_trace = "StackTraceString" in result.get("Data")
         has_class_name = "ClassName" in result.get("Data")
-        has_exception = result.get("Exception") != "None"
+        has_exception = result.get("Exception") != None
 
         if has_stack_trace or has_class_name or has_exception:
             self.result = "Fail"
