@@ -55,7 +55,7 @@ class Duplicati:
             ]
 
     def convert_epoch(self, date):
-        new_date = self.rm_spaces(date)
+        new_date = self.rm_spaces(self.truncate_timestamp(date))
         date_object = datetime.strptime(new_date, "%Y-%m-%dT%H:%M:%S.%fZ")
         date_object = date_object.replace(tzinfo=pytz.UTC)
         return date_object.timestamp()
@@ -69,3 +69,15 @@ class Duplicati:
 
         total_seconds = int(h) * 3600 + int(m) * 60 + int(s) + int(ms) / 1_000_000
         return total_seconds
+
+    def truncate_timestamp(self, timestamp):
+        """
+        This function is only being done because windows its a trash that send more than 6 digits when return microseconds
+        """
+        dot_index = timestamp.rfind('.')
+
+        if dot_index != -1 and len(timestamp) > dot_index + 7:
+            formatted_timestamp = timestamp[:dot_index + 7] + 'Z'
+        else:
+            formatted_timestamp = timestamp
+        return formatted_timestamp
