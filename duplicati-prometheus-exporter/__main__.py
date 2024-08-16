@@ -190,7 +190,7 @@ def post_backup():
             f"{backup.operation_name} for {backup.backup_name} was finished with {backup.result} status"
         )
         logging.debug(f"{data}")
-        if backup.result is "Fail":
+        if backup.result == "Fail":
             logging.info(f"{backup.message}")
             is_last_backup_failed(backup)
         else:
