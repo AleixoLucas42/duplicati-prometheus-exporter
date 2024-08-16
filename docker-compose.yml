@@ -7,6 +7,8 @@ services:
     image: duplicati-prometheus-exporter
     ports:
       - "5000:5000"
+    environment:
+      - LOG_LEVEL=INFO
   prometheus:
     container_name: prometheus
     image: prom/prometheus

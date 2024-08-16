@@ -6,6 +6,9 @@ import prometheus_client
 from prometheus_client.core import CollectorRegistry
 from prometheus_client import Summary, Counter, Gauge
 from classes.duplicati import Duplicati
+import logging
+
+logging.basicConfig(level=f"{os.getenv('LOG_LEVEL', 'INFO')}", format="%(asctime)s - %(levelname)s - %(message)s")
 
 app = Flask(__name__)
 
@@ -183,11 +186,12 @@ def post_backup():
     if request.is_json:
         data = request.json
         backup = Duplicati(data)
-        print(
-            f"[+] {backup.operation_name} for {backup.backup_name} was finished with {backup.result} status"
+        logging.info(
+            f"{backup.operation_name} for {backup.backup_name} was finished with {backup.result} status"
         )
+        logging.debug(f"{data}")
         if backup.result is "Fail":
-            print(f"[!] {backup.message}")
+            logging.info(f"{backup.message}")
             is_last_backup_failed(backup)
         else:
             backup_summary(backup)
@@ -196,6 +200,7 @@ def post_backup():
         backup_inc(backup)
         response = make_response(jsonify({"message": "Received"}), 204)
     else:
+        logging.error("The post received is not in the right format (json)")
         response = make_response(
             jsonify(
                 {
@@ -222,4 +227,5 @@ def get_backup():
 
 
 if __name__ == "__main__":
+    logging.debug("Starting application")
     app.run(host="0.0.0.0", port=os.getenv("DUPLICATI_EXPORTER_PORT", 5000))
