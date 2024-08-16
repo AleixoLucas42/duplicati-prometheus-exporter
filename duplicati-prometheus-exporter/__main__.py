@@ -227,5 +227,5 @@ def get_backup():
 
 
 if __name__ == "__main__":
-    logging.debug("Starting application...")
+    logging.debug("Starting application")
     app.run(host="0.0.0.0", port=os.getenv("DUPLICATI_EXPORTER_PORT", 5000))
