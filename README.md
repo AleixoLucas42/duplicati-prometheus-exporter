@@ -56,7 +56,6 @@ For this you have to install python3.9 or higher. You can change service port by
 > C:\ .venv\Scripts\activate.bat # Window
 - Install python packages required
 > pip install -r requirements.txt
-> python -m venv .venv
 - Finally
 > python duplicat-prometheus-exporter
 
