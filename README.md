@@ -19,6 +19,7 @@ For this demo is needed to be installed docker in your machine. How demo is sett
 > http://localhost:3000/d/ddmio2e27ctmod/duplicati-backup-dashboard
 
 ![Grafana dashboard example](docs/static/grafan-dash.png)
+
 ~This dashboard can change while i'm developing and improving.
 
 ## Prometheus scrap config example
