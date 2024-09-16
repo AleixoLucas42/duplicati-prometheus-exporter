@@ -84,7 +84,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "topk(1, free_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"}) / topk(1, total_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"})  * 100",
+						"expr": "topk(1, duplicati_free_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"}) / topk(1, duplicati_total_quota_space{backup_name=\"$backup_name\", operation_name=\"$operation\"})  * 100",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
@@ -152,7 +152,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "backup_list_count{backup_name=\"$backup_name\", operation_name=\"Backup\"}",
+						"expr": "duplicati_backup_list_count{backup_name=\"$backup_name\", operation_name=\"Backup\"}",
 						"instant": false,
 						"legendFormat": "__auto",
 						"range": true,
@@ -423,7 +423,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "topk(1, duration{backup_name=\"$backup_name\", operation_name=\"$operation\"})",
+						"expr": "topk(1, duplicati_duration{backup_name=\"$backup_name\", operation_name=\"$operation\"})",
 						"instant": false,
 						"legendFormat": "Duration",
 						"range": true,
@@ -519,7 +519,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "folders_created{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_folders_created{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Folders Created",
 						"range": true,
@@ -615,7 +615,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "bytes_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_bytes_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Bytes upload",
 						"range": true,
@@ -627,7 +627,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "bytes_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_bytes_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"hide": false,
 						"instant": false,
 						"legendFormat": "Bytes download",
@@ -724,7 +724,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_deleted{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_files_deleted{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Files deleted",
 						"range": true,
@@ -820,7 +820,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_files_uploaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"instant": false,
 						"legendFormat": "Files upload",
 						"range": true,
@@ -832,7 +832,7 @@
 							"uid": "${datasource}"
 						},
 						"editorMode": "code",
-						"expr": "files_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
+						"expr": "duplicati_files_downloaded{backup_name=\"$backup_name\", operation_name=\"$operation\", result=\"Success\"}",
 						"hide": false,
 						"instant": false,
 						"legendFormat": "Files download",
