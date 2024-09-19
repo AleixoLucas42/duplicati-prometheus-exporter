@@ -63,6 +63,11 @@ graphs["duplicati_is_last_backup_failed"] = Gauge(
     "1 means last backup failed",
     ["backup_name"],
 )
+graphs["duplicati_ops_result"] = Gauge(
+    "duplicati_ops_result",
+    "Last Duplicati operation result, 0 means Success, 1 Warning and 2 Fail",
+    ["backup_name", "operation_name"],
+)
 
 
 graphs["duplicati_backup_summary"] = Summary(
@@ -181,6 +186,18 @@ def is_last_backup_failed(backup):
         backup_name=backup.backup_name,
     ).set(backup.is_last_backup_failed)
 
+def last_ops_result(backup):
+    if backup.result == "Success":
+        status = 0
+    elif backup.result == "Warning":
+        status = 1
+    else:
+        status = 2
+    graphs["duplicati_ops_result"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+    ).set(status)
+
 @app.route("/", methods=["POST"])
 def post_backup():
     if request.is_json:
@@ -191,11 +208,16 @@ def post_backup():
         )
         logging.debug(f"{data}")
         if backup.result == "Fail":
-            logging.info(f"{backup.message}")
+            if hasattr(backup, 'message'):
+                logging.info(f"{backup.message}")
+            else:
+                logging.warning("Could not get any error message")
+            last_ops_result(backup)
             is_last_backup_failed(backup)
         else:
             backup_summary(backup)
             backup_gauge(backup)
+            last_ops_result(backup)
             is_last_backup_failed(backup)
         backup_inc(backup)
         response = make_response(jsonify({"message": "Received"}), 204)
