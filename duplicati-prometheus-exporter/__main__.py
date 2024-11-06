@@ -53,6 +53,12 @@ graphs["duplicati_folders_created"] = Gauge(
 graphs["duplicati_free_quota_space"] = Gauge(
     "duplicati_free_quota_space", "Free Quota Space", ["backup_name", "operation_name", "result"]
 )
+graphs["duplicati_known_file_size"] = Gauge(
+    "duplicati_known_file_size", "Size of backup", ["backup_name", "operation_name", "result"]
+)
+graphs["duplicati_size_of_examined_files"] = Gauge(
+    "duplicati_size_of_examined_files", "Size of source data", ["backup_name", "operation_name", "result"]
+)
 graphs["duplicati_total_quota_space"] = Gauge(
     "duplicati_total_quota_space",
     "Total Quota Space",
@@ -180,6 +186,16 @@ def backup_gauge(backup):
         operation_name=backup.operation_name,
         result=backup.result,
     ).set(backup.total_quota_space)
+    graphs["duplicati_known_file_size"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.known_file_size)
+    graphs["duplicati_size_of_examined_files"].labels(
+        backup_name=backup.backup_name,
+        operation_name=backup.operation_name,
+        result=backup.result,
+    ).set(backup.size_of_examined_files)
 
 def is_last_backup_failed(backup):
     graphs["duplicati_is_last_backup_failed"].labels(
