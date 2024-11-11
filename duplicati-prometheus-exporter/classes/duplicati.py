@@ -53,6 +53,10 @@ class Duplicati:
             self.free_quota_space = result.get("Data")["BackendStatistics"][
                 "FreeQuotaSpace"
             ]
+            self.known_file_size = result.get("Data")["BackendStatistics"][
+                "KnownFileSize"
+            ]
+            self.size_of_examined_files = result.get("Data")["SizeOfExaminedFiles"]
 
     def convert_epoch(self, date):
         new_date = self.rm_spaces(self.truncate_timestamp(date))
